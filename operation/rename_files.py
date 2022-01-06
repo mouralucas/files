@@ -1,11 +1,11 @@
 import os
 from hashlib import md5
-from scipy.misc import imread, imresize, imshow
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-# %matplotlib inline
-import time
-import numpy as np
+# from scipy.misc import imread, imresize, imshow
+# import matplotlib.pyplot as plt
+# import matplotlib.gridspec as gridspec
+# # %matplotlib inline
+# import time
+# import numpy as np
 
 
 def create_hash(filepath):
