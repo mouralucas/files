@@ -1,40 +1,35 @@
-# from hashlib import md5
-# from scipy.misc import imread, imresize, imshow
-# import matplotlib.pyplot as plt
-# import matplotlib.gridspec as gridspec
-# # %matplotlib inline
-# import time
-# import numpy as np
 from open_files import list_files, listdir, list_files_recursive
 from rename_files import create_hash
 import os
+from tqdm import tqdm
 
 # os.chdir(r'D:\System\Documents\mega\Imagens\Eu, Família e Amigos')
-os.chdir(r'D:\System\Documents\mega\Imagens\Eu, Família e Amigos\2019')
+# os.chdir(r'D:\System\Documents\mega\Imagens\Eu, Família e Amigos\2019')
+os.chdir(r'E:\System\Documents\mega\Imagens\Eu, Família e Amigos')
 # os.chdir(r'D:\System\Documents\mega\Imagens\Tatuagens')
 # os.chdir(r'C:\Users\lucas\Desktop\img_test')
-file_list, directories = list_files_recursive(os.getcwd())
+file_list_1, directories = list_files_recursive(os.getcwd())
 
-# os.chdir(r'C:\Users\lucas\Desktop\img_test')
-# list_content(os.getcwd())
+os.chdir(r'E:\System\Documents\mega\Camera Uploads')
+file_list_2, directories_2 = list_files_recursive(os.getcwd())
 
-# print('\n')
-#
-# file_list = os.listdir()
-# for i in file_list:
-#     print(i)
-#
+os.chdir(r'C:\Users\lucas\iCloudPhotos\Photos')
+file_list_3, directories_3 = list_files_recursive(os.getcwd())
 
+file_list = file_list_1 + file_list_2 + file_list_3
 
 duplicate = {}
-for i in file_list:
-    filehash = create_hash(i)
-    print('Hash:', filehash)
-    if filehash not in duplicate:
-        duplicate[filehash] = [i]
-    else:
-        duplicate[filehash].append(i)
-
+total_items = len(file_list)
+total = 0
+with tqdm(total=total_items, desc="Calculating Total") as pbar:
+    for idx, i in enumerate(file_list):
+        filehash = create_hash(i)
+        print('Item {item_idx} from {total_items}. Hash: {item_hash}'.format(item_idx=idx, total_items=total_items, item_hash=filehash))
+        if filehash not in duplicate:
+            duplicate[filehash] = [i]
+        else:
+            print('           Duplicated found: {file}'.format(file=i))
+            duplicate[filehash].append(i)
 
 file = open('Itens duplicados.txt', 'w')
 # print('\n')
